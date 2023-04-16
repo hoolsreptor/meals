@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
-import './categories.dart';
+import 'onscreenwidgets/categories.dart';
 
 final theme = ThemeData(
   useMaterial3: true,
