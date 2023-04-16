@@ -9,14 +9,11 @@ final theme = ThemeData(
       brightness: Brightness.dark),
   textTheme: GoogleFonts.latoTextTheme(), 
 );
-
-
 void main() {
   runApp(const App());
 }
 class App extends StatelessWidget {
   const App({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
