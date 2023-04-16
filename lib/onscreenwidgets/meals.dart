@@ -12,6 +12,7 @@ class MealsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //if döngüsünde daha etkin kullanmak için content diye widget oluşturarak bodye aktarmış olduk.
     Widget content = Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
