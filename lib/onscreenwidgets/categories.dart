@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meals/nonscreenwidgets/category_grid_item.dart';
 import 'package:meals/data/dummy_data.dart';
-
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({super.key});
+  const CategoriesScreen({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +20,13 @@ class CategoriesScreen extends StatelessWidget {
           mainAxisSpacing: 20,
         ),
         children: [
+          //availableCategories.map((e) => CategoryGridItem(category: e)).toList()
+          //yukarıdaki alternatif yöntem, ancak köşeli parantez kullanma. Daha önce kullanmıştık, biliyorsun.
           for (final category in availableCategories)
             CategoryGridItem(category: category)
+            //category indexli ile availableCategories içerisinde loop çalıştırdık, bu loopu CategoryGridItem'a yönlendirdik ve böylece içerisinde ayarlamış
+            //olduğumuz tüm kişiselliştirme ayarlarını da kullanabildik.
+            , 
         ],
       ),
     );
