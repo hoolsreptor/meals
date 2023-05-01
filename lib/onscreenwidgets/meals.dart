@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
 import 'package:meals/widgets/meals_item.dart';
+import 'package:meals/onscreenwidgets/meal_details.dart';
 
 class MealsScreen extends StatelessWidget {
   const MealsScreen({super.key, required this.title, required this.meals});
@@ -10,6 +11,14 @@ class MealsScreen extends StatelessWidget {
 
   final String title;
   final List<Meal> meals;
+
+    void selectmeal (BuildContext context, Meal meal) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => MealDetailsScreen(meal: meal),));
+    //Void fonksiyonun amacı MealDetailsScreen'i MealsItam'a iletebileceğimiz  ve ListView builderda kullanabilmek için. Bu fonksiyonu
+    //meals_item'da kullanıyoruz. Sebebi InkWell'de herbir meal için onTap'ın ne yapacağını belirlemek için
+    //Navigator.of().push metoduyla geri de gelebileceğimiz bir ekran oluşturmuş oluyoruz.
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +49,10 @@ class MealsScreen extends StatelessWidget {
     if (meals.isNotEmpty) {
       content = ListView.builder(
           itemCount: meals.length,
-          itemBuilder: (ctx, index) => MealItam(meal: meals[index]));
+          itemBuilder: (ctx, index) => MealItam(meal: meals[index], onSelectmeal: (context, meal) {
+            selectmeal(context, meal);
+            
+          },));
     }
 
     return Scaffold(
