@@ -30,7 +30,7 @@ class MealDetailsScreen extends StatelessWidget {
                 "Ingredients",
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.bold),   
               ),
               const SizedBox(height: 24),
               //for loop, dummy datadaki liste içinde bulunan tüm öğeleri burada gösterebilmek için kullanıldı.
