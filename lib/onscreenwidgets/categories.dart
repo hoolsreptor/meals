@@ -3,11 +3,13 @@ import 'package:meals/nonscreenwidgets/category_grid_item.dart';
 import 'package:meals/data/dummy_data.dart';
 import 'package:meals/onscreenwidgets/meals.dart';
 import 'package:meals/models/category.dart';
+import 'package:meals/models/meal.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({
-    super.key,
+    super.key, required this.onToggleFavorite
   });
+  final void Function(Meal meal) onToggleFavorite;
 
 //Navigatorü daha önce kullanmıştuk. .push ile ekran üzerinde ekran açaarak mealsa yönlendirmek için yaptık.
 //Statelessta contexti global kullanamayacağımız için void fonksiyon parantezinde BuildContext contexti birkez daha kullandık.
@@ -22,7 +24,7 @@ class CategoriesScreen extends StatelessWidget {
     //Navigator.push(context, route) alternatif yol, ama aşağıdaki daha fazla kullanılır.
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) =>
-          MealsScreen(title: category.title, meals: filteredmeals),
+          MealsScreen(title: category.title, meals: filteredmeals, onToggleFavorite: onToggleFavorite,),
     ));
     //push metoduyla ekran üzerinde ekran açarak MaterialPageRoute'u kullanmamız gerekiyor, builderimiz ise daha önce oluşturduğumuz MealsScreen Widgetı
   }

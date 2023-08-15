@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:meals/onscreenwidgets/categories.dart';
 import 'package:meals/onscreenwidgets/meals.dart';
-
+import 'package:meals/models/meal.dart';
 //burayı navigasyon barını yönetmek için oluşturduk
 
 //Karışılıklık olmaması açısından meals.dartta yaptığımız değişikliği burada anlatacağım. İki adet appbar title olmaması için meals.darttaki string title'ı string? title
@@ -19,6 +19,35 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+
+//Snackbarı daha önce de kullandık burada snackbarı kullanmak üzere bir fonksiyon oluşturarak snackbarın silinmesini ve içerik göstermesini ve bu içeriğin text içermesini belirtiyoruz.
+void _showInfoMessage(String message) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
+  }
+
+
+
+  //Models meal üzerinde boş bir liste oluşturduk. Arından bir fonksiyon yaptık. Daha sonra if döngüsünde kullanmak üzere isExisting değişkeni oluşturduk. Bunu da listede meal
+  //içeren _favoriteMeals. ile eşitledik.
+  //If döngüsünde ise eğer isExisting true ise yani bir şey içerisinde varsa seçili hale gelince içindeki kaldırılır. Eğer değilse içerisine ekleme yapılır
+  //Aşağıda favori ekleyip kaldırdığımızda kullanacağımız snackbara bağlı void fonksiyonumuzun nasıl çalışacağını ayarlıyoruz.
+  final List<Meal> _favoriteMeals = [];
+  void _toggleMealFavoriteStatus(Meal meal) {
+    final isExisting = _favoriteMeals.contains(meal);
+
+    if (isExisting) {
+      setState(() {
+        _favoriteMeals.remove(meal);
+        _showInfoMessage("Meal is no longer a favorite");
+      });
+    } else {
+      _favoriteMeals.add(meal);
+      _showInfoMessage('Marked as favorite');
+    }
+  }
+
   //2 tane öğemiz var BottomNavigationda, bu yüzden _selectedPageIndex kurduk, bunu da index ile eşitleyen fonsiyon haline getirerek
   //onTap'ta kullanmak için oluşturduk
   int _selectedPageIndex = 0;
@@ -31,14 +60,19 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     //Burada aktifsayfamızı kategori widgetıyla eşitliyoruz. AppBar titleında kullanmak için activePageTitle oluşturduk, bu sayede bottomnavigationbarda yapacağımız değişikliklerde
-    //başlığın değişmesini sağlayabileceğiz. 
-    Widget activePage = const CategoriesScreen();
+    //başlığın değişmesini sağlayabileceğiz.
+    Widget activePage = CategoriesScreen(
+      onToggleFavorite: _toggleMealFavoriteStatus,
+    );
     var activePageTitle = "Categories";
 
 //_selectedpageindexte 1 numarada Favorites var. Bu yüzden mantık kuruyoruz. Eğer 1'e eşitse aşağıdaki favorites alanını istediğimize göre şekillendiriyoruz.
 //index 0'dan bire geçerse AppBar başlığını da favorimize göre değiştirmiş oluyoruz.
     if (_selectedPageIndex == 1) {
-      activePage = const MealsScreen(meals: []);
+      activePage = MealsScreen(
+        meals: _favoriteMeals,
+        onToggleFavorite: _toggleMealFavoriteStatus,
+      );
       activePageTitle = "Your favorites";
     }
 

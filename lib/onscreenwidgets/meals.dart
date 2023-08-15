@@ -4,17 +4,18 @@ import 'package:meals/widgets/meals_item.dart';
 import 'package:meals/onscreenwidgets/meal_details.dart';
 
 class MealsScreen extends StatelessWidget {
-  const MealsScreen({super.key, this.title, required this.meals});
+  const MealsScreen({super.key, this.title, required this.meals, required this.onToggleFavorite});
 
   //aşağıdaki yiyeceklerin liste idsini alabildmek için List<Meal> meals argümanını kullandık. Bu sayede ListView ile meals.lenght uzunluğunda
   //bir liste oluştururken itemBuilder ile meals.[index].title ile models titleı indexledik. Bu sayede Meals(title)'a bağlı dummydatadan veri çektik
 
   final String? title;
   final List<Meal> meals;
+  final void Function(Meal meal) onToggleFavorite;
 
   void selectmeal(BuildContext context, Meal meal) {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (ctx) => MealDetailsScreen(meal: meal),
+      builder: (ctx) => MealDetailsScreen(meal: meal, onToggleFavorite: onToggleFavorite,),
     ));
     //Void fonksiyonun amacı MealDetailsScreen'i MealsItam'a iletebileceğimiz  ve ListView builderda kullanabilmek için. Bu fonksiyonu
     //meals_item'da kullanıyoruz. Sebebi InkWell'de herbir meal için onTap'ın ne yapacağını belirlemek için
